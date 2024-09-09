@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Regular Payment</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+</head>
+<body class="bg-gray-100 p-6">
+<div th:insert="~{fragment :: header}"></div>
+<div th:insert="~{sidebar :: header}"></div>
+
+<div class="max-w-xl mx-auto bg-white p-6 rounded-lg shadow-md">
+    <h1 class="text-2xl font-bold mb-6 text-center">Add Regular Payment</h1>
+
+    <form th:action="@{/payments/regular/new}" method="post" th:object="${regularPayment}" class="space-y-4">
+        <div>
+            <label for="name" class="block text-lg font-medium">Name:</label>
+            <input type="text" id="name" th:field="*{name}" th:value="*{name}"
+                   class="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"/>
+        </div>
+
+        <div>
+            <label for="account" class="block text-lg font-medium">Account:</label>
+            <select id="account" th:field="*{accountId}"
+                    class="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
+                <option th:each="account1 : ${accounts}" th:value="${account1.id}" th:text="${account1.getAccountName()}"></option>
+            </select>
+        </div>
+
+        <div>
+            <label for="category" class="block text-lg font-medium">Category:</label>
+            <select id="category" th:field="*{categoryId}"
+                    class="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
+                <option th:each="category1 : ${categories}" th:value="${category1.id}" th:text="${category1.getCategoryName()}"></option>
+            </select>
+        </div>
+
+        <div>
+            <label for="amount" class="block text-lg font-medium">Amount:</label>
+            <input type="number" id="amount" th:field="*{amount}" step="0.01" min="0.00" th:value="*{amount}"
+                   class="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"/>
+        </div>
+
+        <div>
+            <label for="currency" class="block text-lg font-medium">Currency:</label>
+            <select id="currency" th:field="*{currency}"
+                    class="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
+                <option value="USD">USD</option>
+                <option value="KZT">KZT</option>
+                <option value="RUB">RUB</option>
+                <option value="EUR">EUR</option>
+            </select>
+        </div>
+
+        <div>
+            <label for="description" class="block text-lg font-medium">Description:</label>
+            <input type="text" id="description" th:field="*{description}"
+                   class="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"/>
+        </div>
+
+        <div>
+            <label for="startDate" class="block text-lg font-medium">Start Date:</label>
+            <input type="datetime-local" id="startDate" th:field="*{startDate}"
+                   class="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"/>
+        </div>
+
+        <div>
+            <label for="endDate" class="block text-lg font-medium">End Date:</label>
+            <input type="datetime-local" id="endDate" th:field="*{endDate}"
+                   class="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"/>
+        </div>
+
+        <div>
+            <label for="nextDueDate" class="block text-lg font-medium">Next Due Date:</label>
+            <input type="datetime-local" id="nextDueDate" th:field="*{nextDueDate}"
+                   class="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"/>
+        </div>
+
+        <div>
+            <label for="frequency" class="block text-lg font-medium">Frequency:</label>
+            <select id="frequency" th:field="*{frequency}"
+                    class="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
+                <option value="daily">Daily</option>
+                <option value="weekly">Weekly</option>
+                <option value="monthly">Monthly</option>
+                <option value="yearly">Yearly</option>
+            </select>
+        </div>
+
+        <input type="hidden" name="type" th:value="${type}"/>
+
+        <button type="submit" class="w-full bg-blue-500 text-white p-2 rounded-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500">
+            Add Regular Payment
+        </button>
+    </form>
+
+    <div th:if="${errors}" class="mt-4 text-red-500">
+        <p th:each="error: ${errors}" th:text="${error.defaultMessage}">Error message</p>
+    </div>
+</div>
+</body>
+</html>

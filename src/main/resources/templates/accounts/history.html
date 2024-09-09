@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>History of Transfers</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+</head>
+<body class="bg-gray-100">
+<div th:insert="~{fragment :: header}" class="bg-white shadow-md">
+</div>
+
+<div th:insert="~{sidebar :: header}" class="bg-white shadow-md">
+</div>
+
+<div class="container mx-auto p-6 bg-white shadow-md rounded-lg mt-6">
+    <h1 class="text-2xl font-bold mb-4">All Transfers</h1>
+    <table class="min-w-full divide-y divide-gray-200 bg-white shadow-md rounded-lg">
+        <thead class="bg-gray-50">
+        <tr>
+            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">From</th>
+            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">To</th>
+            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Amount</th>
+            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Transfer Date</th>
+            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Description</th>
+            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Currency</th>
+        </tr>
+        </thead>
+        <tbody class="bg-white divide-y divide-gray-200">
+        <tr th:each="account : ${accountTransfers}">
+            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500" th:text="${account.fromAccountName}"></td>
+            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500" th:text="${account.toAccountName}"></td>
+            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500" th:text="${account.amount}"></td>
+            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500" th:text="${account.transferDate}"></td>
+            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500" th:text="${account.description}"></td>
+            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500" th:text="${account.currency}"></td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+</body>
+</html>

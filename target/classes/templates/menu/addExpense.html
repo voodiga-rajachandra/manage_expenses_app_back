@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Expense</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+</head>
+<body class="bg-gray-100 min-h-screen">
+<div th:insert="~{fragment :: header}"></div>
+<div th:insert="~{sidebar :: header}"></div>
+
+<div class="container mx-auto mt-8 p-6 bg-white shadow-md rounded-md">
+    <h1 class="text-2xl font-bold mb-4">Add Expense</h1>
+    <form th:action="@{/menu/expense}" enctype="multipart/form-data" method="post" th:object="${transaction}" class="space-y-4">
+
+        <div class="flex flex-col">
+            <label for="amount" class="mb-2 text-lg font-medium">Amount:</label>
+            <input type="number" id="amount" th:field="*{amount}" step="0.01" min="0.00" th:value="*{amount}"
+                   class="p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400"/>
+        </div>
+
+        <div class="flex flex-col">
+            <label for="account" class="mb-2 text-lg font-medium">Account:</label>
+            <select id="account" th:field="*{accountId}" class="p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400">
+                <option th:each="account1 : ${accounts}" th:value="${account1.id}" th:text="${account1.getAccountName()}"></option>
+            </select>
+        </div>
+
+        <div class="flex flex-col">
+            <label for="category" class="mb-2 text-lg font-medium">Category:</label>
+            <select id="category" th:field="*{categoryId}" class="p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400">
+                <option th:each="category1 : ${categories}" th:value="${category1.id}" th:text="${category1.getCategoryName()}"></option>
+            </select>
+        </div>
+
+        <div class="flex flex-col">
+            <label for="date" class="mb-2 text-lg font-medium">Date:</label>
+            <input id="date" type="datetime-local" name="date" th:field="*{transactionDate}"
+                   class="p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400"/>
+        </div>
+
+        <div class="flex flex-col">
+            <label for="description" class="mb-2 text-lg font-medium">Description:</label>
+            <input id="description" type="text" name="description" th:field="*{description}"
+                   class="p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400"/>
+        </div>
+
+        <div class="flex flex-col">
+            <label for="image" class="mb-2 text-lg font-medium">Image:</label>
+            <input type="file" id="image" name="image" class="p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400"/>
+        </div>
+
+        <button type="submit" class="px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-400">Add Expense</button>
+    </form>
+
+    <div th:if="${errors}" class="mt-4">
+        <p class="text-red-500" th:each="error: ${errors}" th:text="${error.defaultMessage}">Error message</p>
+    </div>
+</div>
+</body>
+</html>

@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>All Transactions</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100">
+<div th:insert="~{fragment :: header}" class="bg-indigo-600 text-white p-4"></div>
+<div th:insert="~{sidebar :: header}" class="bg-gray-800 text-white p-4"></div>
+
+<div class="container mx-auto p-4">
+    <h1 class="text-2xl font-bold mb-4">Filter Transactions</h1>
+
+    <form th:action="@{/transactions}" method="get" class="mb-8 flex space-x-4">
+        <div>
+            <label for="min_amount" class="block text-sm font-medium">Min Amount</label>
+            <input type="number" name="min_amount" id="min_amount" class="border px-2 py-1 rounded"  step="0.01" min="0.00" placeholder="0">
+        </div>
+        <div>
+            <label for="max_amount" class="block text-sm font-medium">Max Amount</label>
+            <input type="number" name="max_amount" id="max_amount" class="border px-2 py-1 rounded" step="0.01" min="0.00" placeholder="1000">
+        </div>
+
+        <div>
+            <label for="from_date" class="block text-sm font-medium">From Date</label>
+            <input type="datetime-local" name="from_date" id="from_date" class="border px-2 py-1 rounded">
+        </div>
+        <div>
+            <label for="to_date" class="block text-sm font-medium">To Date</label>
+            <input type="datetime-local" name="to_date" id="to_date" class="border px-2 py-1 rounded">
+        </div>
+
+        <!-- <div>
+            <label for="account_name" class="block text-sm font-medium">Account</label>
+            <select name="account_name" id="account_name" class="border px-2 py-1 rounded">
+                <option value="">All Accounts</option>
+                <option th:each="account : ${accounts}" th:value="${account.id}" th:text="${account.accountName}"></option>
+                <option></option>
+            </select>
+        </div> -->
+
+        <div>
+            <label for="sort" class="block text-sm font-medium">Sort</label>
+            <select name="sort" id="sort" class="border px-2 py-1 rounded">
+                <option value="amount">Amount</option>
+                <option value="date">Date</option>
+                <option></option>
+            </select>
+        </div>
+
+        <div>
+            <label for="sort_mode" class="block text-sm font-medium">Sort Mode</label>
+            <select name="sort_mode" id="sort_mode" class="border px-2 py-1 rounded">
+                <option value="asc">Ascending</option>
+                <option value="desc">Descending</option>
+                <option></option>
+            </select>
+        </div>
+
+        <!-- Кнопка отправки формы -->
+        <div class="flex items-end">
+            <button type="submit" class="bg-indigo-600 text-white py-2 px-4 rounded hover:bg-indigo-700">Filter</button>
+        </div>
+    </form>
+
+    <!-- Таблица для отображения транзакций -->
+    <h1 class="text-2xl font-bold mb-4">Expense Transactions</h1>
+    <div th:if="${expenseTransactions}">
+        <table class="min-w-full bg-white border border-gray-300 rounded-lg shadow-md mb-8">
+            <thead class="bg-gray-200">
+            <tr>
+                <th class="py-2 px-4 border-b text-left">Amount</th>
+                <th class="py-2 px-4 border-b text-left">Account Name</th>
+                <th class="py-2 px-4 border-b text-left">Category Name</th>
+                <th class="py-2 px-4 border-b text-left">Date</th>
+                <th class="py-2 px-4 border-b text-left">Description</th>
+                <th class="py-2 px-4 border-b text-left">Image</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="transaction : ${expenseTransactions}" class="border-b hover:bg-gray-50">
+                <td class="py-2 px-4" th:text="${transaction.amount}"></td>
+                <td class="py-2 px-4" th:text="${transaction.accountName}"></td>
+                <td class="py-2 px-4" th:text="${transaction.categoryName}"></td>
+                <td class="py-2 px-4" th:text="${transaction.transactionDate}"></td>
+                <td class="py-2 px-4" th:text="${transaction.description}"></td>
+                <td class="py-2 px-4">
+                    <div th:if="${transaction.imagePath}">
+                        <img th:src="@{/api/v1/transactions/{id}/image(id=${transaction.id})}" alt="Transaction Image" class="w-24 h-24 object-cover" />
+                    </div>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div class="pagination">
+        <a th:if="${currentPage > 0}"
+           th:href="@{/transactions(page=${currentPage - 1}, size=${pageSize})}"
+           class="bg-blue-500 text-white px-4 py-2 rounded">Previous</a>
+
+        <span th:text="${currentPage + 1}"></span> of <span th:text="${totalPages}"></span>
+
+        <a th:if="${currentPage < totalPages - 1}"
+           th:href="@{/transactions(page=${currentPage + 1}, size=${pageSize})}"
+           class="bg-blue-500 text-white px-4 py-2 rounded">Next</a>
+    </div>
+
+
+
+</div>
+</body>
+</html>

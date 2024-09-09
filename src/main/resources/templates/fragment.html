@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Header Fragment</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body>
+<div th:fragment="header" class="flex justify-between items-center bg-indigo-600 text-white p-4 rounded-md">
+    <span th:text="${#authentication.principal.username}" class="font-medium">Email</span>
+    <div class="flex items-center gap-2">
+        <form th:action="@{/logout}" method="post">
+            <button type="submit" class="bg-white text-indigo-600 px-4 py-2 rounded-md hover:bg-indigo-700">
+                Logout
+            </button>
+        </form>
+        <form th:action="@{/menu/deleteUser}" method="post">
+            <button type="submit" class="bg-red-600 text-white px-4 py-2 rounded-md hover:bg-red-700">
+                Delete
+            </button>
+        </form>
+    </div>
+</div>
+</body>
+</html>

@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Sidebar Fragment</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body>
+<div th:fragment="header" class="bg-indigo-600 py-2 text-white rounded-md">
+    <div class="sidebar flex items-center justify-center gap-3">
+        <a href="/menu" class="block text-indigo-600 bg-white px-3 py-2 rounded-lg hover:text-indigo-200">Main Menu</a>
+        <a href="/accounts" class="block text-indigo-600 bg-white px-3 py-2 rounded-lg hover:text-indigo-200">Accounts</a>
+        <a href="/categories" class="block text-indigo-600 bg-white px-3 py-2 rounded-lg hover:text-indigo-200">Categories</a>
+        <a href="/payments/regular" class="block text-indigo-600 bg-white px-3 py-2 rounded-lg hover:text-indigo-200">Regular Payments</a>
+    </div>
+</div>
+</body>
+</html>

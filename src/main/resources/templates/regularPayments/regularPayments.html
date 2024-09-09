@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>All Regular Payments</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <script>
+        function handleAddPayment(type) {
+            if (type === 'income' || type === 'expense') {
+                window.location.href = '/payments/regular/new?type=' + type;
+            } else {
+                alert('Invalid choice, please try again.');
+            }
+        }
+    </script>
+</head>
+<body class="bg-gray-100 p-6">
+<div th:insert="~{fragment :: header}"></div>
+<div th:insert="~{sidebar :: header}"></div>
+
+<div class="max-w-6xl mx-auto bg-white p-6 rounded-lg shadow-md">
+    <h1 class="text-3xl font-bold mb-6 text-center">All Regular Payments</h1>
+
+    <table class="min-w-full bg-white border-collapse">
+        <thead>
+        <tr class="bg-gray-100">
+            <th class="p-3 border">Payment Name</th>
+            <th class="p-3 border">Account Name</th>
+            <th class="p-3 border">Type</th>
+            <th class="p-3 border">Category Name</th>
+            <th class="p-3 border">Amount</th>
+            <th class="p-3 border">Currency</th>
+            <th class="p-3 border">Description</th>
+            <th class="p-3 border">Start Date</th>
+            <th class="p-3 border">End Date</th>
+            <th class="p-3 border">Next Due Date</th>
+            <th class="p-3 border">Frequency</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="regular : ${regularPayments}" class="hover:bg-gray-50">
+            <td class="p-3 border" th:text="${regular.name}"></td>
+            <td class="p-3 border" th:text="${regular.accountName}"></td>
+            <td class="p-3 border" th:text="${regular.type}"></td>
+            <td class="p-3 border" th:text="${regular.categoryName}"></td>
+            <td class="p-3 border" th:text="${regular.amount}"></td>
+            <td class="p-3 border" th:text="${regular.currency}"></td>
+            <td class="p-3 border" th:text="${regular.description}"></td>
+            <td class="p-3 border" th:text="${regular.startDate}"></td>
+            <td class="p-3 border" th:text="${regular.endDate}"></td>
+            <td class="p-3 border" th:text="${regular.nextDueDate}"></td>
+            <td class="p-3 border" th:text="${regular.frequency}"></td>
+        </tr>
+        </tbody>
+    </table>
+
+    <div class="mt-6 flex justify-center space-x-4">
+        <button type="button" onclick="handleAddPayment('income')"
+                class="bg-green-500 text-white p-2 rounded-md hover:bg-green-600 focus:outline-none focus:ring-2 focus:ring-green-500">
+            Add Income
+        </button>
+        <button type="button" onclick="handleAddPayment('expense')"
+                class="bg-red-500 text-white p-2 rounded-md hover:bg-red-600 focus:outline-none focus:ring-2 focus:ring-red-500">
+            Add Expense
+        </button>
+    </div>
+</div>
+</body>
+</html>

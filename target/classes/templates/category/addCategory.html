@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Category</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+</head>
+<body class="bg-gray-100">
+<div th:insert="~{fragment :: header}" class="bg-white shadow-md">
+</div>
+
+<div th:insert="~{sidebar :: header}" class="bg-white shadow-md">
+</div>
+
+<div class="container mx-auto p-6 bg-white shadow-md rounded-lg mt-6">
+    <h1 class="text-2xl font-bold mb-4">Add Category</h1>
+    <form th:action="@{/categories/add}" method="post" th:object="${category}" class="space-y-4">
+        <div>
+            <label for="name" class="block text-sm font-medium text-gray-700">Category Name:</label>
+            <input type="text" id="name" th:field="*{categoryName}" th:value="*{categoryName}"
+                   class="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"/>
+        </div>
+        <div>
+            <label for="type" class="block text-sm font-medium text-gray-700">Type:</label>
+            <select name="type" id="type" th:value="*{type}"
+                    class="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
+                <option value="income">Income</option>
+                <option value="expense">Expense</option>
+            </select>
+        </div>
+        <button type="submit" class="inline-flex items-center px-4 py-2 border border-transparent text-base font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+            Add Category
+        </button>
+    </form>
+    <div th:if="${errors}" class="mt-4">
+        <p class="text-red-600" th:each="error: ${errors}" th:text="${error.defaultMessage}">Error message</p>
+    </div>
+</div>
+</body>
+</html>

@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Account</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+</head>
+<body class="bg-gray-100">
+<div th:insert="~{fragment :: header}" class="bg-white shadow-md">
+</div>
+
+<div th:insert="~{sidebar :: header}" class="bg-white shadow-md">
+</div>
+
+<div class="container mx-auto p-6 bg-white shadow-md rounded-lg mt-6">
+    <h1 class="text-2xl font-bold mb-4">Add Account</h1>
+    <form th:action="@{/accounts/add}" method="post" th:object="${account}" class="space-y-4">
+        <div>
+            <label for="name" class="block text-sm font-medium text-gray-700">Name:</label>
+            <input type="text" id="name" th:field="*{accountName}" th:value="*{accountName}"
+                   class="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"/>
+        </div>
+        <div>
+            <label for="balance" class="block text-sm font-medium text-gray-700">Balance:</label>
+            <input type="number" id="balance" th:field="*{balance}" step="0.01" min="0.00" th:value="*{balance}"
+                   class="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"/>
+        </div>
+        <div>
+            <label for="currency" class="block text-sm font-medium text-gray-700">Currency:</label>
+            <select name="currency" id="currency" th:value="*{currency}"
+                    class="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
+                <option value="USD">USD</option>
+                <option value="KZT">KZT</option>
+                <option value="RUB">RUB</option>
+                <option value="EUR">EUR</option>
+            </select>
+        </div>
+        <button type="submit" class="inline-flex items-center px-4 py-2 border border-transparent text-base font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
+            Add Account
+        </button>
+    </form>
+    <div th:if="${errors}" class="mt-4">
+        <p class="text-red-600" th:each="error: ${errors}" th:text="${error.defaultMessage}">Error message</p>
+    </div>
+</div>
+</body>
+</html>
