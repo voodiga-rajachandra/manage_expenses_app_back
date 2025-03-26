@@ -1,6 +1,6 @@
 name: SonarCloud Analysis
 
-on: pull_request
+on: [fork]
 
 jobs:
   sonarcloud:
